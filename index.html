@@ -6,65 +6,108 @@
     <title>Harshit Pradeep Sinha | Cloud Solutions Architect</title>
     <style>
         :root {
-            --primary-color: #0f172a;
-            --secondary-color: #2563eb;
-            --text-main: #334155;
-            --text-dark: #0f172a;
-            --bg-light: #f8fafc;
-            --bg-white: #ffffff;
-            --border-color: #e2e8f0;
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #94a3b8;
+            --text-title: #f8fafc;
+            --accent: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --border: #334155;
+            --tag-bg: #1e293b;
+            --tag-border: #475569;
+            --tag-text: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #475569;
+            --text-title: #0f172a;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --border: #e2e8f0;
+            --tag-bg: #f1f5f9;
+            --tag-border: #cbd5e1;
+            --tag-text: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-main);
-            background-color: var(--bg-light);
-            padding: 2rem 1rem;
+            background-color: var(--bg-body);
+            padding: 3rem 1rem;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
-            background: var(--bg-white);
-            padding: 3rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            background: var(--bg-card);
+            padding: 3.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
         }
 
-        /* Header Styling */
+        /* Controls / Dynamic Elements */
+        .theme-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 3.5rem;
+            background: var(--border);
+            border: none;
+            color: var(--text-title);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.9;
+        }
+
+        /* Header Layout */
         header {
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 2rem;
-            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2.5rem;
+            margin-bottom: 2.5rem;
         }
 
         .header-title h1 {
-            font-size: 2.5rem;
-            color: var(--text-dark);
+            font-size: 3rem;
+            color: var(--text-title);
             font-weight: 800;
-            letter-spacing: -0.025em;
+            letter-spacing: -0.03em;
         }
 
         .header-title h2 {
-            font-size: 1.25rem;
-            color: var(--secondary-color);
+            font-size: 1.35rem;
+            color: var(--accent);
             font-weight: 600;
-            margin-top: 0.25rem;
+            margin-top: 0.4rem;
         }
 
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1.25rem;
-            font-size: 0.9rem;
+            gap: 1.75rem;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .contact-info a {
@@ -73,327 +116,397 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: color 0.2s;
         }
 
         .contact-info a:hover {
-            color: var(--secondary-color);
+            color: var(--accent);
         }
 
-        /* Layout Grid */
-        .resume-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
+        /* Summary Section */
+        .summary-box {
+            font-size: 1.1rem;
+            color: var(--text-title);
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            opacity: 0.95;
         }
 
-        @media (max-width: 768px) {
-            .resume-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            body {
-                padding: 0;
-            }
-            .container {
-                padding: 1.5rem;
-                border-radius: 0;
-            }
-        }
-
-        section {
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
             margin-bottom: 2.5rem;
         }
 
-        h3.section-title {
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
             font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-dark);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.25rem;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            position: relative;
         }
 
-        /* Experience Timeline */
-        .exp-item {
-            margin-bottom: 2rem;
+        .tab-btn.active {
+            color: var(--accent);
         }
 
-        .exp-header {
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Core Experience Timeline Elements */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem - 5px);
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--accent);
+        }
+
+        .timeline-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: baseline;
             flex-wrap: wrap;
             margin-bottom: 0.5rem;
         }
 
-        .company-name {
-            font-size: 1.15rem;
+        .company {
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--text-title);
         }
 
-        .job-timeline {
+        .period {
             font-size: 0.875rem;
-            color: #64748b;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .progression {
+            font-size: 1rem;
             font-weight: 500;
-            background: var(--bg-light);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        .role-progression {
-            font-size: 0.95rem;
-            font-style: italic;
-            color: var(--secondary-color);
-            margin-bottom: 0.75rem;
-            font-weight: 500;
+        .progression span:not(:last-child)::after {
+            content: ' →';
+            color: var(--accent);
         }
 
-        .exp-bullet-list {
-            list-style-type: none;
+        .bullets {
+            list-style: none;
         }
 
-        .exp-bullet-list li {
+        .bullets li {
             position: relative;
             padding-left: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
         }
 
-        .exp-bullet-list li::before {
-            content: "•";
-            color: var(--secondary-color);
-            font-weight: bold;
+        .bullets li::before {
+            content: "▹";
             position: absolute;
             left: 0;
+            color: var(--accent);
+            font-weight: bold;
         }
 
-        /* Right Column Skill Clusters */
-        .skill-group {
-            margin-bottom: 1.5rem;
+        /* Technical Skills Visual Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
-        .skill-group h4 {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
+        .skill-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .skill-card h4 {
+            color: var(--text-title);
+            margin-bottom: 1rem;
+            font-size: 1rem;
             font-weight: 600;
+            border-left: 3px solid var(--accent);
+            padding-left: 0.5rem;
         }
 
-        .tag-container {
+        .tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
 
         .tag {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background: var(--tag-bg);
+            border: 1px solid var(--tag-border);
+            color: var(--tag-text);
             padding: 0.35rem 0.65rem;
             border-radius: 4px;
             font-size: 0.8rem;
             font-weight: 500;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
         }
 
-        .tag:hover {
-            background-color: #eff6ff;
-            border-color: #bfdbfe;
-            color: var(--secondary-color);
+        /* Education & Certs Layout */
+        .edu-cert-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
 
-        /* Certifications & Education */
-        .cert-item, .edu-item {
-            background: var(--bg-light);
-            border-left: 3px solid var(--secondary-color);
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.75rem;
-            border-radius: 0 4px 4px 0;
+        .meta-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
-        .cert-item p, .edu-item p {
+        .meta-card h4 {
+            color: var(--text-title);
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-card p {
             font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-dark);
+            color: var(--accent);
         }
 
-        .edu-item span {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        /* Print-friendly rule optimization */
-        @media print {
-            body {
-                background: none;
-                padding: 0;
-                color: #000;
-            }
-            .container {
-                box-shadow: none;
-                padding: 0;
-                max-width: 100%;
-            }
-            .tag {
-                border: 1px solid #ccc;
-                background: none !important;
-            }
-            .job-timeline {
-                background: none !important;
-                padding: 0;
-            }
+        @media (max-width: 768px) {
+            body { padding: 0; }
+            .container { padding: 1.5rem; border-radius: 0; }
+            .theme-toggle { position: static; margin-bottom: 1.5rem; display: inline-flex; }
+            .timeline-header { flex-direction: column; }
+            .edu-cert-split { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">
+        <span>🌓</span> Mode
+    </button>
+
     <header>
         <div class="header-title">
             <h1>Harshit Pradeep Sinha</h1>
             <h2>Cloud Solutions Architect</h2>
         </div>
         <div class="contact-info">
-            <a href="mailto:harshitpradeep@gmail.com">
-                &#9993; harshitpradeep@gmail.com
-            </a>
-            <a href="tel:+919783699905">
-                &#128222; +91 9783699905
-            </a>
-            <a href="#">
-                &#128205; Bengaluru, India
-            </a>
+            <a href="mailto:harshitpradeep@gmail.com">&#9993; harshitpradeep@gmail.com</a>
+            <a href="tel:+919783699905">&#128222; +91 9783699905</a>
+            <a href="#">&#128205; Bengaluru, India</a>
         </div>
     </header>
 
-    <main class="resume-grid">
-        <div class="main-column">
-            <section id="summary">
-                <p>
-                    Cloud Solutions Architect with 7+ years of experience designing scalable, secure, and cost-optimized distributed systems on AWS and GCP. Strong expertise in Kubernetes, DevOps, identity systems, and SaaS platform architecture with a proven track record of driving 90% GTM acceleration, modernizing enterprise workloads, and building AI/ML infrastructure stacks.
-                </p>
-            </section>
+    <div class="summary-box">
+        Cloud Solutions Architect with 7+ years of experience designing scalable, secure, and cost-optimized distributed systems on AWS and GCP. Strong expertise in Kubernetes, DevOps, identity systems, and SaaS platform architecture with a proven track record of driving 90% GTM acceleration, modernizing enterprise workloads, and building AI/ML infrastructure stacks.
+    </div>
 
-            <section id="experience">
-                <h3 class="section-title">Professional Experience</h3>
-                
-                <div class="exp-item">
-                    <div class="exp-header">
-                        <div class="company-name">Searce Cosourcing Pvt. Ltd.</div>
-                        <div class="job-timeline">August 2018 — Present</div>
-                    </div>
-                    <div class="role-progression">
-                        Solutions Architect (Current) &bull; Associate Solutions Architect &bull; Senior Cloud Engineer &bull; Cloud Engineer
-                    </div>
-                    <ul class="exp-bullet-list">
-                        <li>Designed and implemented Vertex AI-based training and inference pipelines for enterprise AAA use cases.</li>
-                        <li>Built automated ML workflows integrating data ingestion, model training, validation, and production scaling on GPU/TPU environments.</li>
-                        <li>Built a SaaS Accelerator Framework, reducing client GTM timelines by 90% through automated infrastructure provisioning.</li>
-                        <li>Modernized 100+ legacy VM-based workloads by migrating them to GKE utilizing containerization and distributed Jenkins pipelines within a tight 4-week delivery window.</li>
-                        <li>Led pre-sales architecture and scope validation for notable global accounts including Qwiklabs, Unqork, Ambarella, Verge Genomics, and Endowus.</li>
-                        <li> Spearheaded enterprise service delivery for Flipkart, driving infrastructure optimization and cross-business unit engineering collaboration.</li>
-                        <li>Increased repeat client engagement milestones by 30% through technical delivery excellence and solution execution.</li>
-                        <li>Designed and executed Cloud Marketplace Solution onboarding architectures for high-growth enterprise platforms.</li>
-                    </ul>
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'experience-tab')">Experience</button>
+        <button class="tab-btn" onclick="switchTab(event, 'skills-tab')">Expertise & Skills</button>
+        <button class="tab-btn" onclick="switchTab(event, 'education-tab')">Credentials</button>
+    </nav>
+
+    <div id="experience-tab" class="tab-content active">
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="company">Searce Cosourcing Pvt. Ltd.</div>
+                    <div class="period">August 2018 — Present</div>
                 </div>
-            </section>
+                <div class="progression">
+                    <span>Cloud Engineer</span>
+                    <span>Senior Cloud Engineer</span>
+                    <span>Associate Solutions Architect</span>
+                    <strong>Solutions Architect</strong>
+                </div>
+                <ul class="bullets">
+                    <li>Designed and implemented Vertex AI-based training and inference pipelines for enterprise AAA use cases.</li>
+                    <li>Built automated ML workflows integrating data ingestion, model training, validation, and production scaling on GPU/TPU environments.</li>
+                    <li>Built a SaaS Accelerator Framework, reducing client GTM timelines by 90% through automated infrastructure provisioning.</li>
+                    <li>Modernized 100+ legacy VM-based workloads by migrating them to GKE utilizing containerization and distributed Jenkins pipelines within a tight 4-week delivery window.</li>
+                    <li>Led pre-sales architecture and scope validation for notable global accounts including Qwiklabs, Unqork, Ambarella, Verge Genomics, and Endowus.</li>
+                    <li>Spearheaded enterprise service delivery for Flipkart, driving infrastructure optimization and cross-business unit engineering collaboration.</li>
+                    <li>Increased repeat client engagement milestones by 30% through technical delivery excellence and solution execution.</li>
+                    <li>Designed and executed Cloud Marketplace Solution onboarding architectures for high-growth enterprise platforms.</li>
+                </ul>
+            </div>
         </div>
+    </div>
 
-        <div class="sidebar-column">
-            <section id="skills">
-                <h3 class="section-title">Technical Skills</h3>
-                
-                <div class="skill-group">
-                    <h4>Cloud Architecture</h4>
-                    <div class="tag-container">
-                        <span class="tag">GCP</span>
-                        <span class="tag">AWS</span>
-                        <span class="tag">Multi-Region Architecture</span>
-                        <span class="tag">Multi-Account Governance</span>
-                    </div>
+    <div id="skills-tab" class="tab-content">
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h4>Cloud Architecture</h4>
+                <div class="tags">
+                    <span class="tag">GCP</span>
+                    <span class="tag">AWS</span>
+                    <span class="tag">Multi-Region Architecture</span>
+                    <span class="tag">Multi-Account Governance</span>
                 </div>
-
-                <div class="skill-group">
-                    <h4>AI/ML Infrastructure</h4>
-                    <div class="tag-container">
-                        <span class="tag">Vertex AI</span>
-                        <span class="tag">MLOps Pipelines</span>
-                        <span class="tag">GPU/TPU Compute</span>
-                        <span class="tag">Model Deployment</span>
-                    </div>
+            </div>
+            <div class="skill-card">
+                <h4>AI/ML Infrastructure</h4>
+                <div class="tags">
+                    <span class="tag">Vertex AI</span>
+                    <span class="tag">MLOps Pipelines</span>
+                    <span class="tag">GPU/TPU Compute</span>
+                    <span class="tag">Model Deployment</span>
+                    <span class="tag">ML CI/CD</span>
                 </div>
-
-                <div class="skill-group">
-                    <h4>Containers & Orchestration</h4>
-                    <div class="tag-container">
-                        <span class="tag">Kubernetes (GKE, EKS)</span>
-                        <span class="tag">Docker</span>
-                        <span class="tag">AWS ECS</span>
-                        <span class="tag">IRSA</span>
-                    </div>
+            </div>
+            <div class="skill-card">
+                <h4>Containers</h4>
+                <div class="tags">
+                    <span class="tag">Kubernetes</span>
+                    <span class="tag">GKE</span>
+                    <span class="tag">EKS</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">AWS ECS</span>
+                    <span class="tag">IRSA</span>
                 </div>
-
-                <div class="skill-group">
-                    <h4>DevOps & IaC</h4>
-                    <div class="tag-container">
-                        <span class="tag">Terraform</span>
-                        <span class="tag">CloudFormation</span>
-                        <span class="tag">Jenkins</span>
-                        <span class="tag">ArgoCD</span>
-                        <span class="tag">GitLab CI</span>
-                        <span class="tag">Ansible</span>
-                    </div>
+            </div>
+            <div class="skill-card">
+                <h4>DevOps & IaC</h4>
+                <div class="tags">
+                    <span class="tag">Terraform</span>
+                    <span class="tag">CloudFormation</span>
+                    <span class="tag">Jenkins</span>
+                    <span class="tag">ArgoCD</span>
+                    <span class="tag">GitLab CI</span>
+                    <span class="tag">Ansible</span>
+                    <span class="tag">Atlantis</span>
                 </div>
-
-                <div class="skill-group">
-                    <h4>Identity & Security</h4>
-                    <div class="tag-container">
-                        <span class="tag">IAM</span>
-                        <span class="tag">Firebase Auth</span>
-                        <span class="tag">GCIP</span>
-                        <span class="tag">OAuth 2.0</span>
-                        <span class="tag">SAML</span>
-                        <span class="tag">RBAC</span>
-                    </div>
+            </div>
+            <div class="skill-card">
+                <h4>Identity & Security</h4>
+                <div class="tags">
+                    <span class="tag">IAM</span>
+                    <span class="tag">Firebase Auth</span>
+                    <span class="tag">GCIP</span>
+                    <span class="tag">OAuth 2.0</span>
+                    <span class="tag">SAML</span>
+                    <span class="tag">RBAC</span>
                 </div>
-
-                <div class="skill-group">
-                    <h4>Observability</h4>
-                    <div class="tag-container">
-                        <span class="tag">Prometheus</span>
-                        <span class="tag">Grafana</span>
-                        <span class="tag">ELK Stack</span>
-                        <span class="tag">Stackdriver</span>
-                    </div>
+            </div>
+            <div class="skill-card">
+                <h4>Observability</h4>
+                <div class="tags">
+                    <span class="tag">Prometheus</span>
+                    <span class="tag">Grafana</span>
+                    <span class="tag">ELK Stack</span>
+                    <span class="tag">Fluentd</span>
+                    <span class="tag">Stackdriver</span>
+                    <span class="tag">CloudWatch</span>
                 </div>
-            </section>
-
-            <section id="certifications">
-                <h3 class="section-title">Credentials</h3>
-                <div class="cert-item">
-                    <p>Professional Cloud Architect</p>
-                    <small>Google Cloud Certified</small>
-                </div>
-                <div class="cert-item">
-                    <p>Professional Cloud Security Engineer</p>
-                    <small>Google Cloud Certified</small>
-                </div>
-            </section>
-
-            <section id="education">
-                <h3 class="section-title">Education</h3>
-                <div class="edu-item">
-                    <p>B.Tech in Computer Science</p>
-                    <span>Suresh Gyan Vihar University</span><br>
-                    <small>Graduated: 2017</small>
-                </div>
-            </section>
+            </div>
         </div>
-    </main>
+    </div>
+
+    <div id="education-tab" class="tab-content">
+        <div class="edu-cert-split">
+            <div>
+                <h3 style="color: var(--text-title); margin-bottom: 1rem; font-size: 1.1rem; text-transform: uppercase;">Certifications</h3>
+                <div class="meta-card">
+                    <h4>Professional Cloud Architect</h4>
+                    <p>Google Cloud Certified</p>
+                </div>
+                <div class="meta-card">
+                    <h4>Professional Cloud Security Engineer</h4>
+                    <p>Google Cloud Certified</p>
+                </div>
+            </div>
+            <div>
+                <h3 style="color: var(--text-title); margin-bottom: 1rem; font-size: 1.1rem; text-transform: uppercase;">Education</h3>
+                <div class="meta-card">
+                    <h4>B.Tech in Computer Science</h4>
+                    <p style="color: var(--text-main);">Suresh Gyan Vihar University</p>
+                    <small>Graduated: 2017 | 6.71 GPA</small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    // Tab switching logic
+    function switchTab(evt, tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    // Light/Dark Theme Switcher
+    const toggleBtn = document.getElementById('themeToggle');
+    toggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    });
+</script>
 
 </body>
 </html>
