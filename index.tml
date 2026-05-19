@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harshit Pradeep Sinha | Cloud Solutions Architect</title>
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --secondary-color: #2563eb;
+            --text-main: #334155;
+            --text-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+
+        /* Header Styling */
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title h1 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .header-title h2 {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.25rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-info a {
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .contact-info a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Layout Grid */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .resume-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            body {
+                padding: 0;
+            }
+            .container {
+                padding: 1.5rem;
+                border-radius: 0;
+            }
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        h3.section-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-dark);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Experience Timeline */
+        .exp-item {
+            margin-bottom: 2rem;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .job-timeline {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+            background: var(--bg-light);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+
+        .role-progression {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .exp-bullet-list {
+            list-style-type: none;
+        }
+
+        .exp-bullet-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .exp-bullet-list li::before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Right Column Skill Clusters */
+        .skill-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-group h4 {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 0.35rem 0.65rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+            color: var(--secondary-color);
+        }
+
+        /* Certifications & Education */
+        .cert-item, .edu-item {
+            background: var(--bg-light);
+            border-left: 3px solid var(--secondary-color);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .cert-item p, .edu-item p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .edu-item span {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Print-friendly rule optimization */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                color: #000;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .tag {
+                border: 1px solid #ccc;
+                background: none !important;
+            }
+            .job-timeline {
+                background: none !important;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-title">
+            <h1>Harshit Pradeep Sinha</h1>
+            <h2>Cloud Solutions Architect</h2>
+        </div>
+        <div class="contact-info">
+            <a href="mailto:harshitpradeep@gmail.com">
+                &#9993; harshitpradeep@gmail.com
+            </a>
+            <a href="tel:+919783699905">
+                &#128222; +91 9783699905
+            </a>
+            <a href="#">
+                &#128205; Bengaluru, India
+            </a>
+        </div>
+    </header>
+
+    <main class="resume-grid">
+        <div class="main-column">
+            <section id="summary">
+                <p>
+                    Cloud Solutions Architect with 7+ years of experience designing scalable, secure, and cost-optimized distributed systems on AWS and GCP. Strong expertise in Kubernetes, DevOps, identity systems, and SaaS platform architecture with a proven track record of driving 90% GTM acceleration, modernizing enterprise workloads, and building AI/ML infrastructure stacks.
+                </p>
+            </section>
+
+            <section id="experience">
+                <h3 class="section-title">Professional Experience</h3>
+                
+                <div class="exp-item">
+                    <div class="exp-header">
+                        <div class="company-name">Searce Cosourcing Pvt. Ltd.</div>
+                        <div class="job-timeline">August 2018 — Present</div>
+                    </div>
+                    <div class="role-progression">
+                        Solutions Architect (Current) &bull; Associate Solutions Architect &bull; Senior Cloud Engineer &bull; Cloud Engineer
+                    </div>
+                    <ul class="exp-bullet-list">
+                        <li>Designed and implemented Vertex AI-based training and inference pipelines for enterprise AAA use cases.</li>
+                        <li>Built automated ML workflows integrating data ingestion, model training, validation, and production scaling on GPU/TPU environments.</li>
+                        <li>Built a SaaS Accelerator Framework, reducing client GTM timelines by 90% through automated infrastructure provisioning.</li>
+                        <li>Modernized 100+ legacy VM-based workloads by migrating them to GKE utilizing containerization and distributed Jenkins pipelines within a tight 4-week delivery window.</li>
+                        <li>Led pre-sales architecture and scope validation for notable global accounts including Qwiklabs, Unqork, Ambarella, Verge Genomics, and Endowus.</li>
+                        <li> Spearheaded enterprise service delivery for Flipkart, driving infrastructure optimization and cross-business unit engineering collaboration.</li>
+                        <li>Increased repeat client engagement milestones by 30% through technical delivery excellence and solution execution.</li>
+                        <li>Designed and executed Cloud Marketplace Solution onboarding architectures for high-growth enterprise platforms.</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <div class="sidebar-column">
+            <section id="skills">
+                <h3 class="section-title">Technical Skills</h3>
+                
+                <div class="skill-group">
+                    <h4>Cloud Architecture</h4>
+                    <div class="tag-container">
+                        <span class="tag">GCP</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Multi-Region Architecture</span>
+                        <span class="tag">Multi-Account Governance</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h4>AI/ML Infrastructure</h4>
+                    <div class="tag-container">
+                        <span class="tag">Vertex AI</span>
+                        <span class="tag">MLOps Pipelines</span>
+                        <span class="tag">GPU/TPU Compute</span>
+                        <span class="tag">Model Deployment</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Containers & Orchestration</h4>
+                    <div class="tag-container">
+                        <span class="tag">Kubernetes (GKE, EKS)</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">AWS ECS</span>
+                        <span class="tag">IRSA</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h4>DevOps & IaC</h4>
+                    <div class="tag-container">
+                        <span class="tag">Terraform</span>
+                        <span class="tag">CloudFormation</span>
+                        <span class="tag">Jenkins</span>
+                        <span class="tag">ArgoCD</span>
+                        <span class="tag">GitLab CI</span>
+                        <span class="tag">Ansible</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Identity & Security</h4>
+                    <div class="tag-container">
+                        <span class="tag">IAM</span>
+                        <span class="tag">Firebase Auth</span>
+                        <span class="tag">GCIP</span>
+                        <span class="tag">OAuth 2.0</span>
+                        <span class="tag">SAML</span>
+                        <span class="tag">RBAC</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h4>Observability</h4>
+                    <div class="tag-container">
+                        <span class="tag">Prometheus</span>
+                        <span class="tag">Grafana</span>
+                        <span class="tag">ELK Stack</span>
+                        <span class="tag">Stackdriver</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="certifications">
+                <h3 class="section-title">Credentials</h3>
+                <div class="cert-item">
+                    <p>Professional Cloud Architect</p>
+                    <small>Google Cloud Certified</small>
+                </div>
+                <div class="cert-item">
+                    <p>Professional Cloud Security Engineer</p>
+                    <small>Google Cloud Certified</small>
+                </div>
+            </section>
+
+            <section id="education">
+                <h3 class="section-title">Education</h3>
+                <div class="edu-item">
+                    <p>B.Tech in Computer Science</p>
+                    <span>Suresh Gyan Vihar University</span><br>
+                    <small>Graduated: 2017</small>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
