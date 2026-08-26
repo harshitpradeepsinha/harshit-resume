@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: GKE Disaster Recovery & Control Plane Bottleneck | Harshit Pradeep Sinha</title>
+    <style>
+        :root {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #94a3b8;
+            --text-title: #f8fafc;
+            --accent: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --border: #334155;
+            --tag-bg: #0f172a;
+            --tag-border: #475569;
+            --tag-text: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --code-bg: #0b1120;
+        }
+
+        [data-theme="light"] {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #475569;
+            --text-title: #0f172a;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --border: #e2e8f0;
+            --tag-bg: #f1f5f9;
+            --tag-border: #cbd5e1;
+            --tag-text: #334155;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --code-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 3.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent-hover);
+        }
+
+        .theme-toggle {
+            background: var(--border);
+            border: none;
+            color: var(--text-title);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .project-badge {
+            display: inline-block;
+            background: var(--tag-bg);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        h1.title {
+            font-size: 2.4rem;
+            color: var(--text-title);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-main);
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            background: var(--bg-body);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .meta-item h5 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-item p {
+            color: var(--text-title);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .section-header {
+            color: var(--text-title);
+            font-size: 1.3rem;
+            margin: 2.5rem 0 1rem 0;
+            border-left: 4px solid var(--accent);
+            padding-left: 0.75rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background: var(--tag-bg);
+            border: 1px solid var(--tag-border);
+            color: var(--tag-text);
+            padding: 0.35rem 0.65rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Callout Box */
+        .callout-box {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            color: var(--text-title);
+            font-weight: 500;
+        }
+
+        /* Challenge Cards */
+        .challenge-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .challenge-card h3 {
+            color: var(--text-title);
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .problem-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid #ef4444;
+            padding: 1rem;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .solution-box {
+            background: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95rem;
+        }
+
+        .solution-box ul {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .solution-box li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .solution-box li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Step List */
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+            margin: 1.5rem 0;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .step-list li::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent);
+            color: #0f172a;
+            font-weight: 800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        /* Diagrams */
+        .diagram-container {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: monospace;
+            color: var(--accent);
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 0; }
+            .container { padding: 1.5rem; border-radius: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-nav">
+        <a href="index.html" class="back-link">← Back to Resume Overview</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">
+            <span>🌓</span> Mode
+        </button>
+    </div>
+
+    <header>
+        <span class="project-badge">Site Reliability & Infrastructure RCA</span>
+        <h1 class="title">GKE Disaster Recovery: Diagnosing & Resolving a Control Plane & DNS Bottleneck</h1>
+        <p class="subtitle">Uncovering and resolving platform capacity limits during large-scale automated regional recovery.</p>
+    </header>
+
+    <!-- Key Metadata -->
+    <div class="meta-grid">
+        <div class="meta-item">
+            <h5>Domain</h5>
+            <p>SRE / Disaster Recovery</p>
+        </div>
+        <div class="meta-item">
+            <h5>Platform</h5>
+            <p>Google Kubernetes Engine (GKE)</p>
+        </div>
+        <div class="meta-item">
+            <h5>Core Focus</h5>
+            <p>CoreDNS & API Control Plane Optimization</p>
+        </div>
+    </div>
+
+    <!-- Impact Highlights -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">Zonal → Regional</div>
+            <div class="metric-title">Architecture Upgrade</div>
+            <p style="font-size: 0.85rem; margin-top: 0.4rem;">Migrated DR topology to multi-zone HA control plane to withstand burst recovery loads.</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">Staged Startup</div>
+            <div class="metric-title">Deployment Buffers</div>
+            <p style="font-size: 0.85rem; margin-top: 0.4rem;">Eliminated startup-storm bottlenecks with automated progressive workload rollout.</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">100%</div>
+            <div class="metric-title">Service Discovery Reliability</div>
+            <p style="font-size: 0.85rem; margin-top: 0.4rem;">Scaled CoreDNS & API throughput to end CrashLoopBackOff cascades during DR drills.</p>
+        </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <h2 class="section-header">Technologies & Concepts</h2>
+    <div class="tags" style="margin-bottom: 2.5rem;">
+        <span class="tag">Google Kubernetes Engine (GKE)</span>
+        <span class="tag">CoreDNS</span>
+        <span class="tag">Kubernetes API Server</span>
+        <span class="tag">Service Discovery</span>
+        <span class="tag">Regional vs. Zonal GKE</span>
+        <span class="tag">CrashLoopBackOff Diagnostics</span>
+        <span class="tag">Disaster Recovery (DR) Automation</span>
+        <span class="tag">Capacity Planning</span>
+        <span class="tag">Control Plane Troubleshooting</span>
+    </div>
+
+    <!-- Executive Summary / Overview -->
+    <h2 class="section-header">Overview & Incident Context</h2>
+    <p style="margin-bottom: 1rem;">
+        During an enterprise Disaster Recovery (DR) drill, I was tasked with validating the regional failover of a large-scale Kubernetes application platform on GKE[cite: 4]. The exercise simulated a catastrophic loss of the primary cluster, triggering automation to provision a standby cluster in a secondary region[cite: 4].
+    </p>
+    <p style="margin-bottom: 1rem;">
+        While cluster creation and resource deployment initially succeeded, workloads rapidly entered <code>CrashLoopBackOff</code> due to downstream connection failures[cite: 4]. What appeared to be application-level issues was revealed to be a critical platform bottleneck involving <strong>CoreDNS saturation and Kubernetes API Server pressure</strong>[cite: 4].
+    </p>
+
+    <div class="callout-box">
+        💡 Key Finding: Infrastructure recovery had succeeded, but application recovery had failed because DR workload patterns create massive, non-linear startup storms that differ fundamentally from steady-state production[cite: 4].
+    </div>
+
+    <!-- Visual Sequence Diagram -->
+    <h2 class="section-header">The Root Cause Cascade</h2>
+    <div class="diagram-container">
+DR Cluster Provisioned
+       │
+       ▼
+Simultaneous Bulk Deployment of Workloads (Startup Storm)
+       │
+       ├─────────────────────────────────────────┐
+       ▼                                         ▼
+Massive Burst of DNS Queries              High API Request Volume
+       │                                         │
+       ▼                                         ▼
+CoreDNS Overwhelmed                      Kubernetes API Server Overloaded
+       │                                         │
+       ▼                                         ▼
+Service Discovery Fails                  kubectl Operational Timeouts
+("Service A does not exist")                     │
+       │                                         ▼
+       ▼                                 Troubleshooting Impaired
+Applications CrashLoopBackOff
+    </div>
+
+    <!-- Challenges & Findings -->
+    <h2 class="section-header">Detailed Bottleneck Analysis</h2>
+
+    <div class="challenge-card">
+        <h3>Finding #1: CoreDNS Saturation & Service Discovery Failure</h3>
+        <div class="problem-box">
+            <strong>Symptom:</strong> Application logs reported continuous failures such as <code>Can't connect to service A. No such service exists</code>, even though the target Kubernetes Services were confirmed active[cite: 4].
+        </div>
+        <div class="solution-box">
+            <strong>Platform Bottleneck:</strong> The sudden, simultaneous boot of hundreds of application pods created a massive spike in DNS lookup queries for downstream endpoints[cite: 4]. CoreDNS was unable to process the volume, causing transient DNS timeouts that presented to applications as non-existent services[cite: 4].
+        </div>
+    </div>
+
+    <div class="challenge-card">
+        <h3>Finding #2: API Server Rate Pressure & Zonal Limitations</h3>
+        <div class="problem-box">
+            <strong>Symptom:</strong> Operational <code>kubectl</code> commands began timing out or delaying drastically, hindering real-time incident diagnosis[cite: 4].
+        </div>
+        <div class="solution-box">
+            <strong>Platform Bottleneck:</strong> The standby cluster was configured as a <strong>zonal GKE cluster</strong>[cite: 4]. Provisioning hundreds of custom resources, secrets, and pod states simultaneously saturated the single control-plane master[cite: 4].
+        </div>
+    </div>
+
+    <!-- Immediate Recovery Plan -->
+    <h2 class="section-header">Immediate Mitigation & Stabilization</h2>
+    <ul class="step-list">
+        <li>
+            <strong>Cluster Load Shedding:</strong> Scaled down continuously failing workloads to stop background restart loops and relieve control-plane request pressure[cite: 4].
+        </li>
+        <li>
+            <strong>CoreDNS Capacity Scaling:</strong> Manually scaled out CoreDNS replica instances and adjusted request limits to restore reliable DNS resolution[cite: 4].
+        </li>
+        <li>
+            <strong>Staged Incremental Recovery:</strong> Brought online application groups in structured dependency tiers rather than all at once, restoring operational control[cite: 4].
+        </li>
+    </ul>
+
+    <!-- Strategic Architecture Fixes -->
+    <h2 class="section-header">Long-Term Architectural Solutions</h2>
+    <div class="challenge-card">
+        <h3>1. Migration to Regional HA GKE Clusters</h3>
+        <p style="margin-bottom: 0.5rem;">
+            Rearchitected the secondary standby environment from a single-zone cluster to a <strong>Regional GKE cluster</strong>[cite: 4]. This distributed control plane replicas across multiple availability zones, dramatically boosting API throughput during recovery bursts[cite: 4].
+        </p>
+    </div>
+
+    <div class="challenge-card">
+        <h3>2. Deployment Buffers & Phased Recovery Pipeline</h3>
+        <p style="margin-bottom: 0.75rem;">
+            Redesigned the DR pipeline automation to include explicit platform stabilization checks and group deployment buffers[cite: 4]:
+        </p>
+        <div class="diagram-container">
+Create DR Cluster ➔ Validate API Health ➔ Validate CoreDNS ➔ Deploy Platform Infra
+                                                                      │
+                                                                      ▼
+Next Group ◄── Validate Health ◄── Deploy Application Group ◄── Wait for Buffer
+        </div>
+    </div>
+
+    <!-- Lessons Learned -->
+    <h2 class="section-header">Key Architectural Takeaways</h2>
+    <div class="solution-box" style="background: var(--bg-body); border-color: var(--border);">
+        <ul>
+            <li><strong>DR Traffic ≠ Steady State:</strong> DR capacity planning must account for startup-storm spikes across API, DNS, and scheduling layers[cite: 4].</li>
+            <li><strong>Bottom-Up Diagnostics:</strong> When wide ranges of unrelated applications fail simultaneously, look to shared infrastructure components (DNS, API server) before assuming application-level defects[cite: 4].</li>
+            <li><strong>Recovery Verification:</strong> True DR readiness requires proving full application inter-communication and end-to-end functionality, not just cluster creation[cite: 4].</li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    const toggleBtn = document.getElementById('themeToggle');
+    toggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    });
+</script>
+
+</body>
+</html>
