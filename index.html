@@ -13,7 +13,7 @@
             --accent: #38bdf8;
             --accent-hover: #7dd3fc;
             --border: #334155;
-            --tag-bg: #1e293b;
+            --tag-bg: #0f172a;
             --tag-border: #475569;
             --tag-text: #e2e8f0;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
@@ -59,7 +59,6 @@
             position: relative;
         }
 
-        /* Controls / Dynamic Elements */
         .theme-toggle {
             position: absolute;
             top: 2rem;
@@ -81,32 +80,36 @@
             opacity: 0.9;
         }
 
-        /* Header Layout */
         header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 2.5rem;
             margin-bottom: 2.5rem;
+            flex-wrap: wrap-reverse;
         }
 
         .header-title h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             color: var(--text-title);
             font-weight: 800;
             letter-spacing: -0.03em;
         }
 
         .header-title h2 {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             color: var(--accent);
             font-weight: 600;
-            margin-top: 0.4rem;
+            margin-top: 0.3rem;
         }
 
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 1.75rem;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 1.25rem;
             font-size: 0.95rem;
         }
 
@@ -115,23 +118,69 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .contact-info a:hover {
             color: var(--accent);
         }
 
-        /* Summary Section */
         .summary-box {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--text-title);
             line-height: 1.7;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             opacity: 0.95;
         }
 
-        /* Navigation Tabs */
+        .section-header {
+            color: var(--text-title);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-title);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-desc {
+            font-size: 0.875rem;
+            margin: 0;
+            color: var(--text-main);
+        }
+
         .tabs {
             display: flex;
             gap: 1rem;
@@ -143,7 +192,7 @@
             background: none;
             border: none;
             color: var(--text-main);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             padding: 0.75rem 1rem;
             cursor: pointer;
@@ -172,7 +221,6 @@
             display: block;
         }
 
-        /* Core Experience Timeline Elements */
         .timeline {
             position: relative;
             padding-left: 2rem;
@@ -226,7 +274,7 @@
         }
 
         .progression {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: var(--text-main);
             margin-bottom: 1rem;
@@ -248,7 +296,7 @@
             position: relative;
             padding-left: 1.25rem;
             margin-bottom: 0.75rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .bullets li::before {
@@ -259,7 +307,6 @@
             font-weight: bold;
         }
 
-        /* Technical Skills Visual Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -298,7 +345,6 @@
             font-weight: 500;
         }
 
-        /* Education & Certs Layout */
         .edu-cert-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -308,19 +354,19 @@
         .meta-card {
             background: var(--bg-body);
             border: 1px solid var(--border);
-            padding: 1.5rem;
+            padding: 1.25rem;
             border-radius: 8px;
             margin-bottom: 1rem;
         }
 
         .meta-card h4 {
             color: var(--text-title);
-            font-size: 1.05rem;
+            font-size: 1rem;
             margin-bottom: 0.25rem;
         }
 
         .meta-card p {
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             color: var(--accent);
         }
 
@@ -341,50 +387,54 @@
     </button>
 
     <header>
-        <div class="header-title">
-            <h1>Harshit Pradeep Sinha</h1>
-            <h2>Cloud Solutions Architect</h2>
+        <div style="flex: 1; min-width: 280px;">
+            <div class="header-title">
+                <h1>Harshit Pradeep Sinha</h1>
+                <h2>Cloud Solutions Architect</h2>
+            </div>
+            <div class="contact-info">
+                <a href="mailto:harshitpradeep@gmail.com">&#9993; harshitpradeep@gmail.com</a>
+                <a href="tel:+919783699905">&#128222; +91 9783699905</a>
+                <a href="#">&#128205; Bengaluru, India</a>
+            </div>
         </div>
-        <div class="contact-info">
-            <a href="mailto:harshitpradeep@gmail.com">&#9993; harshitpradeep@gmail.com</a>
-            <a href="tel:+919783699905">&#128222; +91 9783699905</a>
-            <a href="#">&#128205; Bengaluru, India</a>
+        <div style="flex-shrink: 0;">
+            <img src="profile.jpg" alt="Harshit Pradeep Sinha" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.2);" onerror="this.style.display='none'">
         </div>
     </header>
 
-<div class="summary-box">
-        Cloud Solutions Architect with 7+ years of experience designing scalable, secure, and cost-optimized distributed systems on AWS and GCP. Strong expertise in Kubernetes, DevOps, identity systems, and SaaS platform architecture with a proven track record of driving 90% GTM acceleration, modernizing enterprise workloads, and building AI/ML infrastructure stacks.
+    <div class="summary-box">
+        Results-driven Solutions Architect with 8+ years of experience designing, automating, and optimizing secure, scalable, and cost-effective distributed systems across AWS and GCP. Proven track record of spearheading enterprise cloud transformations, building production-grade AI/ML infrastructure, and accelerating Time-to-Market by 90% through custom SaaS automation. Expert in Kubernetes orchestration, advanced identity federation, and delivery-led pre-sales engineering for high-growth global clients.
     </div>
 
-    <h3 style="color: var(--text-title); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Key Business Impact & Revenue Drivers</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;">
-        
-        <div style="background: var(--bg-body); border: 1px solid var(--border); border-top: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-title); line-height: 1.1; margin-bottom: 0.5rem;">+30%</div>
-            <div style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 0.5rem;">Repeat Engagements</div>
-            <p style="font-size: 0.9rem; margin: 0; color: var(--text-main);">Generated recurring revenue by scaling accounts through delivery-led sales and high-impact technical execution.</p>
+    <!-- Impact & Business Metrics Dashboard -->
+    <h3 class="section-header">Key Business Impact & Revenue Drivers</h3>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">90%</div>
+            <div class="metric-title">GTM Acceleration</div>
+            <p class="metric-desc">Conceptualized and built a custom SaaS Accelerator Framework using infrastructure automation to slash client release timelines.</p>
         </div>
-
-        <div style="background: var(--bg-body); border: 1px solid var(--border); border-top: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-title); line-height: 1.1; margin-bottom: 0.5rem;">90%</div>
-            <div style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 0.5rem;">GTM Acceleration</div>
-            <p style="font-size: 0.9rem; margin: 0; color: var(--text-main);">Architected a custom SaaS Accelerator Framework, drastically collapsing product delivery timelines for enterprise clients.</p>
+        <div class="metric-card">
+            <div class="metric-value">+30%</div>
+            <div class="metric-title">Repeat Engagements</div>
+            <p class="metric-desc">Generated recurring revenue by bridging pre-sales engineering with high-impact, technical delivery execution.</p>
         </div>
-
-        <div style="background: var(--bg-body); border: 1px solid var(--border); border-top: 4px solid var(--accent); padding: 1.5rem; border-radius: 8px; text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: 800; color: var(--text-title); line-height: 1.1; margin-bottom: 0.5rem;">100+</div>
-            <div style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 0.5rem;">VMs Modernized</div>
-            <p style="font-size: 0.9rem; margin: 0; color: var(--text-main);">Successfully migrated legacy workloads to GKE using containerized Jenkins pipelines in an accelerated 4-week timeline.</p>
+        <div class="metric-card">
+            <div class="metric-value">100+</div>
+            <div class="metric-title">VMs Migrated</div>
+            <p class="metric-desc">Engineered a rapid migration strategy containerizing legacy workloads to GKE via Jenkins pipelines in 4 weeks.</p>
         </div>
-
     </div>
 
+    <!-- Navigation Tabs -->
     <nav class="tabs">
         <button class="tab-btn active" onclick="switchTab(event, 'experience-tab')">Experience</button>
         <button class="tab-btn" onclick="switchTab(event, 'skills-tab')">Expertise & Skills</button>
         <button class="tab-btn" onclick="switchTab(event, 'education-tab')">Credentials</button>
     </nav>
 
+    <!-- TAB 1: EXPERIENCE -->
     <div id="experience-tab" class="tab-content active">
         <div class="timeline">
             <div class="timeline-item">
@@ -393,55 +443,54 @@
                     <div class="period">August 2018 — Present</div>
                 </div>
                 <div class="progression">
-                    <span>Cloud Engineer</span>
-                    <span>Senior Cloud Engineer</span>
-                    <span>Associate Solutions Architect</span>
-                    <strong>Solutions Architect</strong>
+                    <span>Cloud Engineer (Aug 2018 - Jan 2021)</span>
+                    <span>Senior Cloud Engineer (Feb 2021 - Jan 2022)</span>
+                    <span>Associate Solutions Architect (Jan 2022 - Mar 2024)</span>
+                    <strong>Solutions Architect (Mar 2024 - Present)</strong>
                 </div>
                 <ul class="bullets">
-                    <li>Designed and implemented Vertex AI-based training and inference pipelines for enterprise AAA use cases.</li>
-                    <li>Built automated ML workflows integrating data ingestion, model training, validation, and production scaling on GPU/TPU environments.</li>
-                    <li>Built a SaaS Accelerator Framework, reducing client GTM timelines by 90% through automated infrastructure provisioning.</li>
-                    <li>Modernized 100+ legacy VM-based workloads by migrating them to GKE utilizing containerization and distributed Jenkins pipelines within a tight 4-week delivery window.</li>
-                    <li>Led pre-sales architecture and scope validation for notable global accounts including Qwiklabs, Unqork, Ambarella, Verge Genomics, and Endowus.</li>
-                    <li>Spearheaded enterprise service delivery for Flipkart, driving infrastructure optimization and cross-business unit engineering collaboration.</li>
-                    <li>Increased repeat client engagement milestones by 30% through technical delivery excellence and solution execution.</li>
-                    <li>Designed and executed Cloud Marketplace Solution onboarding architectures for high-growth enterprise platforms.</li>
+                    <li><strong>SaaS Acceleration:</strong> Conceptualized and built a custom SaaS Accelerator Framework using infrastructure automation, slashing client Go-To-Market (GTM) timelines by 90%.</li>
+                    <li><strong>Mass Migration:</strong> Engineered and executed a rapid migration strategy to containerize and move 100+ legacy VM workloads to Google Kubernetes Engine (GKE) via distributed Jenkins pipelines in 4 weeks.</li>
+                    <li><strong>AI/ML Infrastructure:</strong> Designed and deployed scalable Vertex AI-based training and inference pipelines supporting real-time prediction workloads for high-impact AAA use cases.</li>
+                    <li><strong>MLOps & Automation:</strong> Built automated ML workflows integrating data ingestion, model training, validation, and zero-downtime production deployment with rigorous ML CI/CD for full reproducibility and rollback.</li>
+                    <li><strong>Identity & Security:</strong> Architected complex cloud identity federation systems using Firebase Auth, SAML, OAuth 2.0, AWS EKS, and IAM Roles for Service Accounts (IRSA) enforcing strict least-privilege access.</li>
+                    <li><strong>Pre-Sales Consulting:</strong> Led high-stakes pre-sales architecture and technical solution design for marquee global clients (Qwiklabs for Google, Unqork, Ambarella, Verge Genomics, Endowus), translating requirements into binding SOWs.</li>
+                    <li><strong>Enterprise Delivery:</strong> Directed strategic delivery initiatives for hyper-scale clients like Flipkart, driving multi-BU collaboration and continuous performance optimization.</li>
+                    <li><strong>Account Governance & Growth:</strong> Achieved a 30% increase in repeat client engagements and designed cloud marketplace solutions and multi-account landing zones for enterprise onboarding.</li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <!-- TAB 2: SKILLS -->
     <div id="skills-tab" class="tab-content">
         <div class="skills-grid">
             <div class="skill-card">
                 <h4>Cloud Architecture</h4>
                 <div class="tags">
-                    <span class="tag">GCP</span>
                     <span class="tag">AWS</span>
+                    <span class="tag">GCP</span>
                     <span class="tag">Multi-Region Architecture</span>
-                    <span class="tag">Multi-Account Governance</span>
+                    <span class="tag">Multi-Account Landing Zones</span>
                 </div>
             </div>
             <div class="skill-card">
-                <h4>AI/ML Infrastructure</h4>
+                <h4>AI/ML Infrastructure & Agents</h4>
                 <div class="tags">
                     <span class="tag">Vertex AI</span>
-                    <span class="tag">MLOps Pipelines</span>
-                    <span class="tag">GPU/TPU Compute</span>
-                    <span class="tag">Model Deployment</span>
-                    <span class="tag">ML CI/CD</span>
+                    <span class="tag">Building Agents</span>
+                    <span class="tag">Training & Inference Pipelines</span>
+                    <span class="tag">MLOps & ML CI/CD</span>
                 </div>
             </div>
             <div class="skill-card">
-                <h4>Containers</h4>
+                <h4>Container Platforms</h4>
                 <div class="tags">
                     <span class="tag">Kubernetes</span>
                     <span class="tag">GKE</span>
                     <span class="tag">EKS</span>
-                    <span class="tag">Docker</span>
                     <span class="tag">AWS ECS</span>
-                    <span class="tag">IRSA</span>
+                    <span class="tag">Docker</span>
                 </div>
             </div>
             <div class="skill-card">
@@ -450,41 +499,44 @@
                     <span class="tag">Terraform</span>
                     <span class="tag">CloudFormation</span>
                     <span class="tag">Jenkins</span>
-                    <span class="tag">ArgoCD</span>
                     <span class="tag">GitLab CI</span>
-                    <span class="tag">Ansible</span>
-                    <span class="tag">Atlantis</span>
+                    <span class="tag">ArgoCD</span>
                 </div>
             </div>
             <div class="skill-card">
-                <h4>Identity & Security</h4>
+                <h4>Security & Identity Federation</h4>
                 <div class="tags">
                     <span class="tag">IAM</span>
-                    <span class="tag">Firebase Auth</span>
                     <span class="tag">GCIP</span>
-                    <span class="tag">OAuth 2.0</span>
-                    <span class="tag">SAML</span>
+                    <span class="tag">PAM</span>
+                    <span class="tag">JIT</span>
+                    <span class="tag">IGA</span>
+                    <span class="tag">Firebase Auth</span>
                     <span class="tag">RBAC</span>
+                    <span class="tag">IRSA</span>
                 </div>
             </div>
             <div class="skill-card">
-                <h4>Observability</h4>
+                <h4>Serverless & Observability</h4>
                 <div class="tags">
+                    <span class="tag">AWS Lambda</span>
+                    <span class="tag">GCP Cloud Functions</span>
                     <span class="tag">Prometheus</span>
                     <span class="tag">Grafana</span>
-                    <span class="tag">ELK Stack</span>
-                    <span class="tag">Fluentd</span>
-                    <span class="tag">Stackdriver</span>
-                    <span class="tag">CloudWatch</span>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- TAB 3: CREDENTIALS & EDUCATION -->
     <div id="education-tab" class="tab-content">
         <div class="edu-cert-split">
             <div>
                 <h3 style="color: var(--text-title); margin-bottom: 1rem; font-size: 1.1rem; text-transform: uppercase;">Certifications</h3>
+                <div class="meta-card">
+                    <h4>AWS Certified Solutions Architect – Associate</h4>
+                    <p>Amazon Web Services</p>
+                </div>
                 <div class="meta-card">
                     <h4>Professional Cloud Architect</h4>
                     <p>Google Cloud Certified</p>
@@ -493,13 +545,17 @@
                     <h4>Professional Cloud Security Engineer</h4>
                     <p>Google Cloud Certified</p>
                 </div>
+                <div class="meta-card">
+                    <h4>Claude Certified Associate</h4>
+                    <p>Anthropic Certified</p>
+                </div>
             </div>
             <div>
                 <h3 style="color: var(--text-title); margin-bottom: 1rem; font-size: 1.1rem; text-transform: uppercase;">Education</h3>
                 <div class="meta-card">
-                    <h4>B.Tech in Computer Science</h4>
+                    <h4>B.Tech in Engineering</h4>
                     <p style="color: var(--text-main);">Suresh Gyan Vihar University</p>
-                    <small>Graduated: 2017 | 6.71 GPA</small>
+                    <small>2013 - 2017 | 6.71 GPA</small>
                 </div>
             </div>
         </div>
@@ -507,7 +563,6 @@
 </div>
 
 <script>
-    // Tab switching logic
     function switchTab(evt, tabId) {
         const contents = document.querySelectorAll('.tab-content');
         contents.forEach(content => content.classList.remove('active'));
@@ -519,7 +574,6 @@
         evt.currentTarget.classList.add('active');
     }
 
-    // Light/Dark Theme Switcher
     const toggleBtn = document.getElementById('themeToggle');
     toggleBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
